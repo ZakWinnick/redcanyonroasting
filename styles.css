@@ -1300,16 +1300,18 @@ a.upcoming-event-row:hover .upcoming-event-arrow {
 }
 
 .newsletter-form {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 10px;
   width: 100%;
-  max-width: 680px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
 .newsletter-label {
   display: block;
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: left;
   font-size: 12px;
   letter-spacing: 0.08em;
@@ -1318,7 +1320,7 @@ a.upcoming-event-row:hover .upcoming-event-arrow {
 }
 
 .newsletter-input {
-  flex: 1;
+  width: 100%;
   font-family: 'Outfit', sans-serif;
   font-size: 16px;
   font-weight: 300;
@@ -1533,7 +1535,11 @@ footer {
   .partnership-headline { font-size: 28px; }
   .events-grid { grid-template-columns: 1fr; }
   .newsletter { padding: 60px 32px; }
-  .newsletter-form { flex-direction: column; }
+  .newsletter-form {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+  .newsletter-btn { width: 100%; }
   footer { padding: 48px 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .page-hero { padding: 120px 32px 60px; }
