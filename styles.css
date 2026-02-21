@@ -521,12 +521,12 @@ nav.scrolled .nav-social a:hover {
 
 .hero-logo-mark {
   position: absolute;
-  top: 30%;
+  top: 22%;
   right: clamp(64px, 10vw, 180px);
   transform: translateY(-50%);
   width: clamp(320px, 38vw, 680px);
   max-height: 46vh;
-  opacity: 0.38;
+  opacity: 0.16;
   pointer-events: none;
   z-index: 1;
 }
