@@ -183,14 +183,7 @@ nav.nav-dark.scrolled {
 
 .nav-cta:hover { background: var(--red-dark); }
 
-/* Nav social icons */
-.nav-social {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-left: 8px;
-}
-
+/* Nav social icons (inside .nav-links as <li>) */
 .nav-social a {
   color: var(--cream);
   font-size: 16px;
@@ -1477,7 +1470,6 @@ footer {
 @media (max-width: 768px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
-  .nav-social { display: none; }
   .nav-mobile-toggle { display: flex; }
   .hero { padding: 100px 32px 60px; }
   .hero-title { font-size: 40px; }
