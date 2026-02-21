@@ -74,6 +74,34 @@ body {
 .delay-5 { animation-delay: 0.65s; }
 .delay-6 { animation-delay: 0.8s; }
 
+/* Scroll-triggered animations (IntersectionObserver) */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+.animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+.animate-on-scroll.delay-3 { transition-delay: 0.35s; }
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+:focus-visible {
+  outline: 2px solid var(--sand);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* ==========================================
    NAVIGATION
    ========================================== */
@@ -175,7 +203,7 @@ nav.nav-dark.scrolled {
 }
 
 .mobile-menu {
-  display: none;
+  display: flex;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(44,44,44,0.98);
@@ -184,9 +212,17 @@ nav.nav-dark.scrolled {
   align-items: center;
   justify-content: center;
   gap: 32px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
 }
 
-.mobile-menu.open { display: flex; }
+.mobile-menu.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
 
 .mobile-menu a {
   font-size: 20px;
@@ -682,6 +718,30 @@ nav.nav-dark.scrolled {
   color: var(--red);
 }
 
+/* Origin card hover label */
+.origin-card-shop-label {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--red);
+  padding: 6px 12px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.origin-card:hover .origin-card-shop-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Origin detail cards (for origins page) */
 .origin-detail {
   display: grid;
@@ -1102,6 +1162,51 @@ nav.nav-dark.scrolled {
   color: var(--charcoal-light);
 }
 
+/* Event row links */
+a.upcoming-event-row {
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s ease;
+  padding: 24px 16px;
+  margin: 0 -16px;
+  border-radius: 8px;
+  border-bottom: none;
+}
+
+a.upcoming-event-row + .upcoming-event-row,
+a.upcoming-event-row + a.upcoming-event-row {
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+a.upcoming-event-row:hover {
+  background: rgba(180, 35, 42, 0.04);
+}
+
+a.upcoming-event-row:hover .upcoming-event-name {
+  color: var(--red);
+}
+
+.upcoming-event-arrow {
+  font-size: 14px;
+  color: var(--red);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 12px;
+}
+
+a.upcoming-event-row:hover .upcoming-event-arrow {
+  opacity: 1;
+}
+
+/* Empty events state */
+.no-events {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--charcoal-light);
+  padding: 40px 0;
+}
+
 /* ==========================================
    NEWSLETTER
    ========================================== */
@@ -1163,6 +1268,16 @@ nav.nav-dark.scrolled {
 }
 
 .newsletter-btn:hover { background: var(--red-dark); }
+
+.newsletter-btn.success {
+  background: var(--forest);
+  pointer-events: none;
+}
+
+.newsletter-input:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
 
 /* ==========================================
    FOOTER
@@ -1241,6 +1356,45 @@ footer {
 .footer-social a:hover { color: var(--cream); }
 
 /* ==========================================
+   BACK TO TOP
+   ========================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  background: var(--charcoal);
+  color: var(--cream);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 90;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--red);
+}
+
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================
    RESPONSIVE
    ========================================== */
 @media (max-width: 1024px) {
@@ -1288,4 +1442,6 @@ footer {
   .origin-detail-specs { grid-template-columns: 1fr; }
   .rangeway-details { padding: 48px 32px; }
   .upcoming-event-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  a.upcoming-event-row { margin: 0; padding: 20px 16px; }
+  .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
 }

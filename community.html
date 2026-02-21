@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community — Red Canyon Roasting Company</title>
+<meta name="description" content="Find Red Canyon Roasting at EV meetups, outdoor events, and community gatherings across the Bay Area and Northern California.">
+<meta property="og:title" content="Community — Red Canyon Roasting Company">
+<meta property="og:description" content="Find us at EV meetups, outdoor events, and community gatherings across the Bay Area and Northern California.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Community — Red Canyon Roasting Company">
+<meta name="twitter:description" content="Find us at EV meetups, outdoor events, and community gatherings across the Bay Area and Northern California.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<noscript><style>.animate-fade-up, .animate-on-scroll { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- NAV:START -->
 <nav id="navbar" class="nav-dark">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
@@ -28,11 +39,12 @@
     <li><a href="community.html" class="active">Community</a></li>
     <li><a href="https://shop.redcanyonroasting.co" class="nav-cta">Shop</a></li>
   </ul>
-  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
+<!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="origins.html">Origins</a>
   <a href="story.html">Our Story</a>
@@ -40,6 +52,7 @@
   <a href="community.html">Community</a>
   <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta">Shop</a>
 </div>
+<!-- NAV:END -->
 
 <!-- Page Hero -->
 <section class="page-hero">
@@ -59,11 +72,11 @@
 <section class="community">
   <div class="community-header">
     <div class="section-label">Our Communities</div>
-    <div class="section-heading">Who We Roll With</div>
+    <h2 class="section-heading">Who We Roll With</h2>
     <div class="section-subheading">Red Canyon was born from the EV community. These are our people.</div>
   </div>
 
-  <div class="events-grid">
+  <div class="events-grid animate-on-scroll">
     <div class="event-card">
       <div class="event-icon event-icon-rivian">
         <svg width="24" height="24" viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
@@ -90,35 +103,20 @@
   <!-- Upcoming Events -->
   <div class="upcoming-events">
     <div class="upcoming-title">Upcoming Events</div>
-
-    <div class="upcoming-event-row">
-      <div class="upcoming-event-date">Mar 7, 2026</div>
-      <div class="upcoming-event-name">Bay Area Rivian Club — Spring Kickoff</div>
-      <div class="upcoming-event-location">Marin Headlands, CA</div>
-    </div>
-
-    <div class="upcoming-event-row">
-      <div class="upcoming-event-date">Mar 21, 2026</div>
-      <div class="upcoming-event-name">NorCal EVs — Napa Valley Drive</div>
-      <div class="upcoming-event-location">Napa, CA</div>
-    </div>
-
-    <div class="upcoming-event-row">
-      <div class="upcoming-event-date">Apr 4, 2026</div>
-      <div class="upcoming-event-name">Bay Area Rivian Club — Ocean Beach Meetup</div>
-      <div class="upcoming-event-location">San Francisco, CA</div>
-    </div>
-
-    <div class="upcoming-event-row">
-      <div class="upcoming-event-date">Apr 18, 2026</div>
-      <div class="upcoming-event-name">NorCal EVs — Earth Day Rally</div>
-      <div class="upcoming-event-location">Sacramento, CA</div>
-    </div>
-
-    <div class="upcoming-event-row">
-      <div class="upcoming-event-date">May 2, 2026</div>
-      <div class="upcoming-event-name">Bay Area Rivian Club — Point Reyes Trail Run</div>
-      <div class="upcoming-event-location">Point Reyes, CA</div>
+    <div id="events-container">
+      <!-- Events loaded from data/events.json by main.js -->
+      <noscript>
+        <div class="upcoming-event-row">
+          <div class="upcoming-event-date">Mar 7, 2026</div>
+          <div class="upcoming-event-name">Bay Area Rivian Club — Spring Kickoff</div>
+          <div class="upcoming-event-location">Marin Headlands, CA</div>
+        </div>
+        <div class="upcoming-event-row">
+          <div class="upcoming-event-date">Mar 21, 2026</div>
+          <div class="upcoming-event-name">NorCal EVs — Napa Valley Drive</div>
+          <div class="upcoming-event-location">Napa, CA</div>
+        </div>
+      </noscript>
     </div>
   </div>
 </section>
@@ -135,7 +133,7 @@
 
 <!-- Newsletter -->
 <section class="newsletter" style="background: var(--cream);">
-  <div class="newsletter-inner">
+  <div class="newsletter-inner animate-on-scroll">
     <div class="newsletter-title">Stay in the Canyon</div>
     <div class="newsletter-desc">Event announcements, new origins, and community updates.</div>
     <form class="newsletter-form">
@@ -146,10 +144,11 @@
 </section>
 
 <!-- Footer -->
+<!-- FOOTER:START -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="index.html" class="nav-logo">
+      <a href="index.html" class="nav-logo" style="margin-bottom: 0;">
         <svg width="32" height="32" viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
           <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
           <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
@@ -159,8 +158,9 @@
         </svg>
         <span class="nav-logo-text" style="font-size: 12px;">Red Canyon</span>
       </a>
-      <p>Single origin coffee roasted with intention. The exclusive roaster for all Rangeway Basecamps.</p>
+      <p>Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.</p>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Shop</div>
       <a href="https://shop.redcanyonroasting.co">All Origins</a>
@@ -168,6 +168,7 @@
       <a href="https://shop.redcanyonroasting.co">Gift Cards</a>
       <a href="https://shop.redcanyonroasting.co">Merch</a>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Company</div>
       <a href="story.html">Our Story</a>
@@ -175,6 +176,7 @@
       <a href="community.html">Events</a>
       <a href="mailto:hello@redcanyonroasting.co">Contact</a>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Support</div>
       <a href="https://shop.redcanyonroasting.co">FAQ</a>
@@ -183,8 +185,9 @@
       <a href="mailto:hello@redcanyonroasting.co">Wholesale</a>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <p>© <span class="footer-year">2026</span> Red Canyon Roasting Company. All rights reserved.</p>
+    <p>&copy; <span class="footer-year">2026</span> Red Canyon Roasting Company. All rights reserved.</p>
     <div class="footer-social">
       <a href="#">Instagram</a>
       <a href="#">TikTok</a>
@@ -192,6 +195,11 @@
     </div>
   </div>
 </footer>
+<!-- FOOTER:END -->
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
 
 <script src="main.js"></script>
 </body>

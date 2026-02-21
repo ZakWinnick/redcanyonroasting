@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Red Canyon Roasting Company — Single Origin Coffee</title>
+<meta name="description" content="Single origin coffee roasted with intention. Sourced from the highlands of Africa and the volcanic soils of Hawai'i. The exclusive roaster for all Rangeway Basecamps.">
+<meta property="og:title" content="Red Canyon Roasting Company — Single Origin Coffee">
+<meta property="og:description" content="Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Red Canyon Roasting Company — Single Origin Coffee">
+<meta name="twitter:description" content="Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<noscript><style>.animate-fade-up, .animate-on-scroll { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
-<!-- ====== NAVIGATION ====== -->
+<!-- NAV:START -->
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +39,7 @@
     <li><a href="community.html">Community</a></li>
     <li><a href="https://shop.redcanyonroasting.co" class="nav-cta">Shop</a></li>
   </ul>
-  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -41,6 +52,7 @@
   <a href="community.html">Community</a>
   <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta">Shop</a>
 </div>
+<!-- NAV:END -->
 
 <!-- ====== HERO ====== -->
 <section class="hero">
@@ -72,15 +84,16 @@
 
 <!-- ====== ORIGINS PREVIEW ====== -->
 <section class="origins" id="origins">
-  <div class="origins-header">
+  <div class="origins-header animate-on-scroll">
     <div class="section-label">Our Origins</div>
-    <div class="section-heading">Where It Begins</div>
+    <h2 class="section-heading">Where It Begins</h2>
     <div class="section-subheading">Every bag tells the story of its origin — the soil, the altitude, the hands that grew it.</div>
   </div>
 
   <div class="origins-grid">
     <a href="https://shop.redcanyonroasting.co" class="origin-card">
       <div class="origin-card-image terrain-ethiopia">
+        <div class="origin-card-shop-label">Shop →</div>
         <div class="origin-card-region">Ethiopia</div>
       </div>
       <div class="origin-card-info">
@@ -95,6 +108,7 @@
 
     <a href="https://shop.redcanyonroasting.co" class="origin-card">
       <div class="origin-card-image terrain-kenya">
+        <div class="origin-card-shop-label">Shop →</div>
         <div class="origin-card-region">Kenya</div>
       </div>
       <div class="origin-card-info">
@@ -109,6 +123,7 @@
 
     <a href="https://shop.redcanyonroasting.co" class="origin-card">
       <div class="origin-card-image terrain-hawaii">
+        <div class="origin-card-shop-label">Shop →</div>
         <div class="origin-card-region">Hawai'i</div>
       </div>
       <div class="origin-card-info">
@@ -138,7 +153,7 @@
       <circle cx="105" cy="28" r="6" fill="#D4A574" opacity="0.6"/>
     </svg>
   </div>
-  <div class="story-content">
+  <div class="story-content animate-on-scroll">
     <div class="section-label">Our Story</div>
     <h2 class="story-title">Born from the<br/>open road.</h2>
     <p class="story-text">
@@ -153,7 +168,7 @@
 
 <!-- ====== RANGEWAY PARTNERSHIP ====== -->
 <section class="partnership" id="rangeway">
-  <div class="partnership-content">
+  <div class="partnership-content animate-on-scroll">
     <div class="partnership-eyebrow">Strategic Partnership</div>
     <h2 class="partnership-headline">
       The <em>exclusive coffee roaster</em> for<br/>all Rangeway Basecamps
@@ -172,9 +187,9 @@
 
 <!-- ====== COMMUNITY PREVIEW ====== -->
 <section class="community" id="community">
-  <div class="community-header">
+  <div class="community-header animate-on-scroll">
     <div class="section-label">Community</div>
-    <div class="section-heading">Find Us Out There</div>
+    <h2 class="section-heading">Find Us Out There</h2>
     <div class="section-subheading">Catch us pouring at EV meetups and outdoor events across the Bay Area and Northern California.</div>
   </div>
 
@@ -209,7 +224,7 @@
 
 <!-- ====== NEWSLETTER ====== -->
 <section class="newsletter">
-  <div class="newsletter-inner">
+  <div class="newsletter-inner animate-on-scroll">
     <div class="newsletter-title">Stay in the Canyon</div>
     <div class="newsletter-desc">New origins, roast drops, event announcements, and the occasional trail recommendation. No spam, ever.</div>
     <form class="newsletter-form">
@@ -219,7 +234,7 @@
   </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
+<!-- FOOTER:START -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -262,7 +277,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>© <span class="footer-year">2026</span> Red Canyon Roasting Company. All rights reserved.</p>
+    <p>&copy; <span class="footer-year">2026</span> Red Canyon Roasting Company. All rights reserved.</p>
     <div class="footer-social">
       <a href="#">Instagram</a>
       <a href="#">TikTok</a>
@@ -270,7 +285,22 @@
     </div>
   </div>
 </footer>
+<!-- FOOTER:END -->
 
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Red Canyon Roasting Company",
+  "url": "https://redcanyonroasting.co",
+  "description": "Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.",
+  "email": "hello@redcanyonroasting.co"
+}
+</script>
 <script src="main.js"></script>
 </body>
 </html>
