@@ -432,13 +432,14 @@ async function submitNewsletter(form, email) {
 
 document.querySelectorAll('.newsletter-form').forEach(form => {
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
     const btn = form.querySelector('.newsletter-btn');
     const input = form.querySelector('.newsletter-input');
     const message = form.querySelector('.newsletter-status');
     const email = input?.value?.trim() || '';
+    const isButtondownForm = form.classList.contains('embeddable-buttondown-form');
 
     if (!email || !input?.checkValidity()) {
+      e.preventDefault();
       if (message) {
         message.textContent = 'Enter a valid email address.';
         message.classList.add('error');
@@ -455,6 +456,14 @@ document.querySelectorAll('.newsletter-form').forEach(form => {
       message.textContent = '';
       message.classList.remove('error');
     }
+
+    // Buttondown forms work best as native form posts.
+    if (isButtondownForm) {
+      trackEvent('newsletter_submit', { page: PAGE, email_domain: email.split('@')[1] || 'unknown' });
+      return;
+    }
+
+    e.preventDefault();
 
     try {
       await submitNewsletter(form, email);

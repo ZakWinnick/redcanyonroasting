@@ -1267,7 +1267,7 @@ a.upcoming-event-row:hover .upcoming-event-arrow {
   text-align: center;
 }
 
-.newsletter-inner { max-width: 500px; margin: 0 auto; }
+.newsletter-inner { max-width: 700px; margin: 0 auto; }
 
 .newsletter-title {
   font-size: 28px;
@@ -1284,7 +1284,13 @@ a.upcoming-event-row:hover .upcoming-event-arrow {
   line-height: 1.7;
 }
 
-.newsletter-form { display: flex; gap: 12px; }
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
 
 .newsletter-label {
   display: block;
@@ -1299,9 +1305,10 @@ a.upcoming-event-row:hover .upcoming-event-arrow {
 .newsletter-input {
   flex: 1;
   font-family: 'Outfit', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
-  padding: 14px 20px;
+  min-height: 52px;
+  padding: 14px 22px;
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 4px;
   background: var(--white);
