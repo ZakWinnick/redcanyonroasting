@@ -8,8 +8,8 @@ Static marketing website for Red Canyon Roasting Company — a specialty coffee 
 
 - Vanilla HTML, CSS, JavaScript — no frameworks, no build tools
 - Google Fonts (Outfit)
-- Firebase Hosting
-- Optional `build.sh` for syncing shared nav/footer partials
+- Font Awesome 6 (social icons)
+- GitHub Pages hosting
 
 ## Structure
 
@@ -20,10 +20,8 @@ story.html          Brand story
 rangeway.html       Rangeway partnership
 community.html      Events and community
 styles.css          Global stylesheet
-main.js             Site JavaScript
+main.js             Site JavaScript (includes shared nav/footer)
 data/events.json    Upcoming events data
-partials/           Shared nav and footer HTML
-build.sh            Partial sync script
 favicon.svg         SVG favicon
 ```
 
@@ -37,13 +35,7 @@ python3 -m http.server 8000
 
 ### Updating shared nav/footer
 
-Edit `partials/nav.html` or `partials/footer.html`, then run:
-
-```sh
-./build.sh
-```
-
-This syncs the partials into all 5 pages, applying per-page `nav-dark` class and active link states.
+Edit the nav or footer template in `main.js`. All 5 pages inject nav/footer from JS at runtime, so changes propagate automatically.
 
 ### Updating events
 
@@ -60,8 +52,4 @@ Edit `data/events.json`. Events are sorted by date and past events are automatic
 
 ## Deployment
 
-Hosted on Firebase Hosting. Deploy with:
-
-```sh
-firebase deploy
-```
+Hosted on GitHub Pages. Push to `main` branch to deploy.

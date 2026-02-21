@@ -1,4 +1,120 @@
+// ==========================================
+// Shared nav + footer injection
+// ==========================================
+// Nav and footer are defined once here and injected into placeholder
+// elements (#nav-root, #footer-root) on each page. This eliminates
+// the need to duplicate markup across 5 HTML files.
+//
+// NOTE: All content below is hardcoded site markup — no user input
+// is interpolated. innerHTML is safe here because the strings are
+// static developer-controlled templates with no external data.
+
+const PAGE = location.pathname.split('/').pop() || 'index.html';
+const IS_INNER = PAGE !== 'index.html';
+
+function activeClass(href) {
+  return PAGE === href ? ' class="active"' : '';
+}
+
+const LOGO_SVG = `<svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
+  <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
+  <path d="M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z" fill="#B4232A"/>
+  <path d="M65,140 L75,95 L85,95 L95,140 Z" fill="#2C2C2C"/>
+  <circle cx="105" cy="28" r="6" fill="#D4A574"/>
+</svg>`;
+
+// Nav
+const navRoot = document.getElementById('nav-root');
+if (navRoot) {
+  // Safe: static markup only, no user input
+  navRoot.innerHTML = `
+<nav id="navbar"${IS_INNER ? ' class="nav-dark"' : ''}>
+  <a href="index.html" class="nav-logo">
+    ${LOGO_SVG}
+    <span class="nav-logo-text">Red Canyon</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="origins.html"${activeClass('origins.html')}>Origins</a></li>
+    <li><a href="story.html"${activeClass('story.html')}>Our Story</a></li>
+    <li><a href="rangeway.html"${activeClass('rangeway.html')}>Rangeway</a></li>
+    <li><a href="community.html"${activeClass('community.html')}>Community</a></li>
+    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta">Shop</a></li>
+    <li class="nav-social"><a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+    <li class="nav-social"><a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a></li>
+  </ul>
+  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="origins.html">Origins</a>
+  <a href="story.html">Our Story</a>
+  <a href="rangeway.html">Rangeway</a>
+  <a href="community.html">Community</a>
+  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta">Shop</a>
+  <div class="mobile-menu-social">
+    <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+  </div>
+</div>`;
+}
+
+// Footer
+const footerRoot = document.getElementById('footer-root');
+if (footerRoot) {
+  // Safe: static markup only, no user input
+  footerRoot.innerHTML = `
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="margin-bottom: 0;">
+        <svg width="32" height="32" viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
+          <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
+          <path d="M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z" fill="#B4232A"/>
+          <path d="M65,140 L75,95 L85,95 L95,140 Z" fill="#2C2C2C"/>
+          <circle cx="105" cy="28" r="6" fill="#D4A574"/>
+        </svg>
+        <span class="nav-logo-text" style="font-size: 12px;">Red Canyon</span>
+      </a>
+      <p>Single origin coffee roasted with intention. Sourced from Africa and Hawai\u2019i. The exclusive roaster for all Rangeway Basecamps.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Shop</div>
+      <a href="https://shop.redcanyonroasting.co">All Origins</a>
+      <a href="https://shop.redcanyonroasting.co">Subscriptions</a>
+      <a href="https://shop.redcanyonroasting.co">Gift Cards</a>
+      <a href="https://shop.redcanyonroasting.co">Merch</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="story.html">Our Story</a>
+      <a href="rangeway.html">Rangeway Partnership</a>
+      <a href="community.html">Events</a>
+      <a href="mailto:hello@redcanyonroasting.co">Contact</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Support</div>
+      <a href="https://shop.redcanyonroasting.co">FAQ</a>
+      <a href="https://shop.redcanyonroasting.co">Shipping</a>
+      <a href="https://shop.redcanyonroasting.co">Returns</a>
+      <a href="mailto:hello@redcanyonroasting.co">Wholesale</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>\u00a9 ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">X</a>
+    </div>
+  </div>
+</footer>`;
+}
+
+// ==========================================
 // Nav scroll effect + back-to-top visibility
+// ==========================================
 const nav = document.getElementById('navbar');
 const backToTop = document.getElementById('backToTop');
 
@@ -26,12 +142,9 @@ if (backToTop) {
   });
 }
 
-// Dynamic footer year
-document.querySelectorAll('.footer-year').forEach(el => {
-  el.textContent = new Date().getFullYear();
-});
-
+// ==========================================
 // Mobile menu toggle
+// ==========================================
 const toggle = document.getElementById('mobileToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 
@@ -57,7 +170,9 @@ if (toggle && mobileMenu) {
   });
 }
 
-// Scroll-triggered animations (IntersectionObserver)
+// ==========================================
+// Scroll-triggered animations
+// ==========================================
 const scrollElements = document.querySelectorAll('.animate-on-scroll');
 
 if (scrollElements.length > 0) {
@@ -73,7 +188,9 @@ if (scrollElements.length > 0) {
   scrollElements.forEach(el => observer.observe(el));
 }
 
-// Events renderer (community page) — uses safe DOM methods
+// ==========================================
+// Events renderer (community page)
+// ==========================================
 function createEventRow(event) {
   const date = new Date(event.date + 'T12:00:00');
   const formatted = date.toLocaleDateString('en-US', {
@@ -157,7 +274,9 @@ async function renderEvents() {
 
 renderEvents();
 
+// ==========================================
 // Newsletter form mock submit
+// ==========================================
 document.querySelectorAll('.newsletter-form').forEach(form => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();

@@ -4,33 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Red Canyon Roasting Company — a static marketing website for a specialty coffee roaster. Built with vanilla HTML, CSS, and JavaScript. No package manager, no frameworks.
+Red Canyon Roasting Company — a static marketing website for a specialty coffee roaster. Built with vanilla HTML, CSS, and JavaScript. No package manager, no frameworks, no build step.
 
 ## Architecture
 
-- **Pages**: `index.html`, `origins.html`, `story.html`, `rangeway.html`, `community.html` — each is a standalone HTML file
-- **Partials**: `partials/nav.html` and `partials/footer.html` — canonical shared sections synced via `build.sh`
-- **Build script**: `build.sh` — optional bash script that syncs nav/footer partials into all pages. Pages work standalone without running it.
+- **Pages**: `index.html`, `origins.html`, `story.html`, `rangeway.html`, `community.html` — each is a standalone HTML file with `<div id="nav-root">` and `<div id="footer-root">` placeholders
+- **Shared nav/footer**: `main.js` injects nav and footer HTML into placeholder divs at runtime. The templates are defined once in `main.js` and auto-detect the current page for `nav-dark` class and active link highlighting.
 - **Styles**: Single global stylesheet `styles.css` (~1450 lines) organized by section comments
-- **JavaScript**: `main.js` — vanilla JS for nav scroll, mobile menu, scroll-triggered animations, events renderer, back-to-top button, and newsletter form
+- **JavaScript**: `main.js` — vanilla JS for nav/footer injection, nav scroll, mobile menu, scroll-triggered animations, events renderer, back-to-top button, and newsletter form
 - **Data**: `data/events.json` — JSON-driven upcoming events list (community page)
 - **Fonts**: Google Fonts (Outfit, weights 200–800) loaded via CDN with `preconnect`
+- **Icons**: Font Awesome 6 (fontawesome.min.css + brands.min.css) for social icons in nav
 - **Favicon**: `favicon.svg` — SVG mountain logo mark
-- **Hosting**: Firebase Hosting
+- **Hosting**: GitHub Pages
 
-There is no required build step. Changes to HTML/CSS/JS are served directly. Run `./build.sh` only when editing shared nav/footer markup.
+Changes to HTML/CSS/JS are served directly. There is no build step.
 
-## Partials System
+## Nav/Footer Injection
 
-Nav and footer are shared across all 5 pages using comment markers:
-- `<!-- NAV:START -->` / `<!-- NAV:END -->` — wraps nav + mobile menu
-- `<!-- FOOTER:START -->` / `<!-- FOOTER:END -->` — wraps footer
+Nav and footer are defined as template literals in `main.js` and injected into `#nav-root` and `#footer-root` on each page. The script:
+- Detects the current page via `location.pathname`
+- Adds `class="nav-dark"` on inner pages (not index.html)
+- Adds `class="active"` to the matching nav link
+- `<script src="main.js">` loads synchronously at the bottom of `<body>` so the DOM is ready
 
-`build.sh` replaces content between markers with the partial files, then applies per-page customizations:
-- Inner pages get `class="nav-dark"` on the `<nav>` element
-- Each page gets `class="active"` on its corresponding nav link
-
-The script is idempotent and compatible with macOS bash 3.2+.
+To edit nav or footer markup, edit the templates in `main.js`. All 5 pages update automatically.
 
 ## Events System
 
@@ -69,4 +67,4 @@ Each color has light/dark variants (e.g., `--red-dark`, `--sand-light`).
 
 ## Page Structure Pattern
 
-Every page follows: fixed navbar → hero section → content sections → newsletter form → footer → back-to-top button. Nav and footer are synced from partials via `build.sh`.
+Every page follows: `<div id="nav-root">` → hero section → content sections → newsletter form → `<div id="footer-root">` → back-to-top button → `<script src="main.js">`.
