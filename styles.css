@@ -1822,3 +1822,9 @@ footer {
     padding: 18px;
   }
 }
+
+@media (min-width: 769px) {
+  .hero {
+    justify-content: flex-start;
+  }
+}
