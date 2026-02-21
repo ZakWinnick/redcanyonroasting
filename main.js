@@ -51,7 +51,7 @@ if (navRoot) {
     <li><a href="story.html"${activeClass('story.html')}>Our Story</a></li>
     <li><a href="rangeway.html"${activeClass('rangeway.html')}>Rangeway</a></li>
     <li><a href="community.html"${activeClass('community.html')}>Community</a></li>
-    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta" data-track="nav_shop_click">Shop</a></li>
+    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta" data-track="nav_shop_click" target="_blank" rel="noopener noreferrer">Shop</a></li>
     <li class="nav-social"><a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
     <li class="nav-social"><a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a></li>
   </ul>
@@ -64,7 +64,7 @@ if (navRoot) {
   <a href="story.html">Our Story</a>
   <a href="rangeway.html">Rangeway</a>
   <a href="community.html">Community</a>
-  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta" data-track="mobile_shop_click">Shop</a>
+  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta" data-track="mobile_shop_click" target="_blank" rel="noopener noreferrer">Shop</a>
   <div class="mobile-menu-social">
     <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
     <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
