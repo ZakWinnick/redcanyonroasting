@@ -7,7 +7,7 @@
 const PAGE = location.pathname.split('/').pop() || 'index.html';
 const IS_INNER = PAGE !== 'index.html';
 const SITE_ORIGIN = 'https://redcanyonroasting.co';
-const NEWSLETTER_ENDPOINT_DEFAULT = 'https://buttondown.com/api/emails/embed-subscribe/redcanyonroasting';
+const NEWSLETTER_ENDPOINT_DEFAULT = 'https://buttondown.com/api/emails/embed-subscribe/redcanyonroastingco';
 
 function activeClass(href) {
   return PAGE === href ? ' class="active"' : '';

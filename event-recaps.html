@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body data-newsletter-endpoint="https://buttondown.com/api/emails/embed-subscribe/redcanyonroasting">
+<body data-newsletter-endpoint="https://buttondown.com/api/emails/embed-subscribe/redcanyonroastingco">
 <div id="nav-root"></div>
 
 <section class="page-hero">
@@ -57,13 +57,15 @@
 
 <section class="newsletter">
   <div class="newsletter-inner animate-on-scroll">
-    <div class="newsletter-title">Get Recaps</div>
+    <div class="newsletter-title">Trail Roasts</div>
     <div class="newsletter-desc">Community highlights and upcoming dates, once per week.</div>
-    <form class="newsletter-form" data-newsletter-endpoint="https://buttondown.com/api/emails/embed-subscribe/redcanyonroasting">
-      <input type="email" class="newsletter-input" placeholder="your@email.com" required>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/redcanyonroastingco" method="post" class="newsletter-form embeddable-buttondown-form" referrerpolicy="unsafe-url" data-newsletter-endpoint="https://buttondown.com/api/emails/embed-subscribe/redcanyonroastingco">
+      <label for="bd-email" class="newsletter-label">Enter your email</label>
+      <input type="email" name="email" id="bd-email" class="newsletter-input" placeholder="your@email.com" required>
       <button type="submit" class="newsletter-btn">Subscribe</button>
     </form>
     <p class="newsletter-status" aria-live="polite"></p>
+    <p class="newsletter-powered"><a href="https://buttondown.com/refer/redcanyonroastingco" target="_blank" rel="noopener noreferrer">Powered by Buttondown.</a></p>
   </div>
 </section>
 
