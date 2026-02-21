@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Red Canyon Roasting Company</title>
+  <desc id="desc">Single origin coffee roasted with intention.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f1e1c"/>
+      <stop offset="55%" stop-color="#312f2a"/>
+      <stop offset="100%" stop-color="#b4232a"/>
+    </linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4a574"/>
+      <stop offset="100%" stop-color="#f3b177"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="54" fill="#d4a574" opacity="0.45"/>
+
+  <path d="M0 520 L210 315 L340 420 L490 245 L640 410 L770 300 L960 520 Z" fill="#d4a574" opacity="0.28"/>
+  <path d="M30 520 L260 335 L410 455 L560 260 L720 430 L900 325 L1170 520 Z" fill="#b4232a" opacity="0.55"/>
+  <path d="M0 540 L220 350 L390 480 L560 300 L730 470 L900 355 L1200 540 Z" fill="#b4232a"/>
+  <path d="M528 540 L570 372 L618 372 L662 540 Z" fill="#1f1e1c"/>
+
+  <text x="100" y="196" fill="#f5f0e8" font-family="Outfit, sans-serif" font-size="28" letter-spacing="8">RED CANYON ROASTING COMPANY</text>
+  <text x="100" y="284" fill="url(#sand)" font-family="Outfit, sans-serif" font-size="70" font-weight="700">Single Origin Coffee</text>
+  <text x="100" y="340" fill="#f5f0e8" font-family="Outfit, sans-serif" font-size="30" opacity="0.92">Roasted with intention for the road ahead.</text>
+</svg>

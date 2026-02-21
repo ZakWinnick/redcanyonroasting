@@ -2,15 +2,12 @@
 // Shared nav + footer injection
 // ==========================================
 // Nav and footer are defined once here and injected into placeholder
-// elements (#nav-root, #footer-root) on each page. This eliminates
-// the need to duplicate markup across 5 HTML files.
-//
-// NOTE: All content below is hardcoded site markup — no user input
-// is interpolated. innerHTML is safe here because the strings are
-// static developer-controlled templates with no external data.
+// elements (#nav-root, #footer-root) on each page.
 
 const PAGE = location.pathname.split('/').pop() || 'index.html';
 const IS_INNER = PAGE !== 'index.html';
+const SITE_ORIGIN = 'https://redcanyonroasting.co';
+const NEWSLETTER_ENDPOINT_DEFAULT = 'https://buttondown.com/api/emails/embed-subscribe/redcanyonroasting';
 
 function activeClass(href) {
   return PAGE === href ? ' class="active"' : '';
@@ -24,10 +21,25 @@ const LOGO_SVG = `<svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
   <circle cx="105" cy="28" r="6" fill="#D4A574"/>
 </svg>`;
 
+function trackEvent(name, props = {}) {
+  try {
+    if (typeof window.tinylytics?.track === 'function') {
+      window.tinylytics.track(name, props);
+    }
+    if (typeof window.plausible === 'function') {
+      window.plausible(name, { props });
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, props);
+    }
+  } catch (e) {
+    // Never break UX because analytics failed.
+  }
+}
+
 // Nav
 const navRoot = document.getElementById('nav-root');
 if (navRoot) {
-  // Safe: static markup only, no user input
   navRoot.innerHTML = `
 <nav id="navbar"${IS_INNER ? ' class="nav-dark"' : ''}>
   <a href="index.html" class="nav-logo">
@@ -39,20 +51,20 @@ if (navRoot) {
     <li><a href="story.html"${activeClass('story.html')}>Our Story</a></li>
     <li><a href="rangeway.html"${activeClass('rangeway.html')}>Rangeway</a></li>
     <li><a href="community.html"${activeClass('community.html')}>Community</a></li>
-    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta">Shop</a></li>
+    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta" data-track="nav_shop_click">Shop</a></li>
     <li class="nav-social"><a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
     <li class="nav-social"><a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a></li>
   </ul>
-  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-expanded="false">
+  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <a href="origins.html">Origins</a>
   <a href="story.html">Our Story</a>
   <a href="rangeway.html">Rangeway</a>
   <a href="community.html">Community</a>
-  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta">Shop</a>
+  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta" data-track="mobile_shop_click">Shop</a>
   <div class="mobile-menu-social">
     <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
     <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
@@ -63,7 +75,6 @@ if (navRoot) {
 // Footer
 const footerRoot = document.getElementById('footer-root');
 if (footerRoot) {
-  // Safe: static markup only, no user input
   footerRoot.innerHTML = `
 <footer>
   <div class="footer-grid">
@@ -78,14 +89,14 @@ if (footerRoot) {
         </svg>
         <span class="nav-logo-text" style="font-size: 12px;">Red Canyon</span>
       </a>
-      <p>Single origin coffee roasted with intention. Sourced from Africa and Hawai\u2019i. The exclusive roaster for all Rangeway Basecamps.</p>
+      <p>Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.</p>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Shop</div>
-      <a href="https://shop.redcanyonroasting.co">All Origins</a>
-      <a href="https://shop.redcanyonroasting.co">Subscriptions</a>
-      <a href="https://shop.redcanyonroasting.co">Gift Cards</a>
-      <a href="https://shop.redcanyonroasting.co">Merch</a>
+      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_all_origins">All Origins</a>
+      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_subscriptions">Subscriptions</a>
+      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_gift_cards">Gift Cards</a>
+      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_merch">Merch</a>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Company</div>
@@ -95,15 +106,15 @@ if (footerRoot) {
       <a href="mailto:hello@redcanyonroasting.co">Contact</a>
     </div>
     <div class="footer-col">
-      <div class="footer-col-title">Support</div>
-      <a href="https://shop.redcanyonroasting.co">FAQ</a>
-      <a href="https://shop.redcanyonroasting.co">Shipping</a>
-      <a href="https://shop.redcanyonroasting.co">Returns</a>
+      <div class="footer-col-title">Learn</div>
+      <a href="brew-guides.html">Brew Guides</a>
+      <a href="origin-stories.html">Origin Stories</a>
+      <a href="event-recaps.html">Event Recaps</a>
       <a href="mailto:hello@redcanyonroasting.co">Wholesale</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>\u00a9 ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.</p>
+    <p>© ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.</p>
     <div class="footer-social">
       <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">X</a>
@@ -135,37 +146,66 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Back to top smooth scroll
 if (backToTop) {
   backToTop.addEventListener('click', () => {
+    trackEvent('back_to_top_click', { page: PAGE });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
 // ==========================================
-// Mobile menu toggle
+// Mobile menu toggle + accessibility
 // ==========================================
 const toggle = document.getElementById('mobileToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 
+function setMenuState(open) {
+  if (!toggle || !mobileMenu) return;
+  mobileMenu.classList.toggle('open', open);
+  mobileMenu.setAttribute('aria-hidden', String(!open));
+  toggle.setAttribute('aria-expanded', String(open));
+  document.body.classList.toggle('menu-open', open);
+}
+
 if (toggle && mobileMenu) {
+  const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
   toggle.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', isOpen);
+    const isOpen = !mobileMenu.classList.contains('open');
+    setMenuState(isOpen);
+    if (isOpen) {
+      const firstLink = mobileMenu.querySelector('a');
+      if (firstLink) firstLink.focus();
+      trackEvent('mobile_menu_open', { page: PAGE });
+    }
   });
 
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      setMenuState(false);
     });
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
-      mobileMenu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      setMenuState(false);
       toggle.focus();
+      return;
+    }
+
+    if (e.key === 'Tab' && mobileMenu.classList.contains('open')) {
+      const focusable = Array.from(mobileMenu.querySelectorAll(focusableSelector));
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 }
@@ -228,19 +268,46 @@ function createEventRow(event) {
   if (isLink) {
     const arrow = document.createElement('span');
     arrow.className = 'upcoming-event-arrow';
-    arrow.textContent = '\u2192';
+    arrow.textContent = '→';
     row.appendChild(arrow);
   }
 
   return row;
 }
 
+function addEventSchema(events) {
+  if (PAGE !== 'community.html') return;
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+
+  const upcoming = events.slice(0, 8).map((event) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.name,
+    startDate: event.date,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: event.location,
+      address: event.location
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'Red Canyon Roasting Company',
+      url: SITE_ORIGIN
+    }
+  }));
+
+  script.textContent = JSON.stringify(upcoming.length === 1 ? upcoming[0] : upcoming);
+  document.head.appendChild(script);
+}
+
 async function renderEvents() {
   const container = document.getElementById('events-container');
-  if (!container) return;
 
   try {
-    const res = await fetch('data/events.json');
+    const res = await fetch('data/events.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const events = await res.json();
 
@@ -250,12 +317,15 @@ async function renderEvents() {
       .filter(e => e.date >= today)
       .sort((a, b) => a.date.localeCompare(b.date));
 
+    addEventSchema(upcoming);
+
+    if (!container) return;
     container.replaceChildren();
 
     if (upcoming.length === 0) {
       const msg = document.createElement('p');
       msg.className = 'no-events';
-      msg.textContent = 'No upcoming events \u2014 check back soon!';
+      msg.textContent = 'No upcoming events — check back soon!';
       container.appendChild(msg);
       return;
     }
@@ -264,10 +334,11 @@ async function renderEvents() {
       container.appendChild(createEventRow(event));
     });
   } catch (e) {
+    if (!container) return;
     container.replaceChildren();
     const msg = document.createElement('p');
     msg.className = 'no-events';
-    msg.textContent = 'Unable to load events \u2014 check back soon!';
+    msg.textContent = 'Unable to load events — check back soon!';
     container.appendChild(msg);
   }
 }
@@ -275,21 +346,167 @@ async function renderEvents() {
 renderEvents();
 
 // ==========================================
-// Newsletter form mock submit
+// Structured data on origins page
 // ==========================================
+function addOriginProductSchema() {
+  if (PAGE !== 'origins.html') return;
+
+  const products = [
+    {
+      '@type': 'Product',
+      name: 'Yirgacheffe',
+      brand: 'Red Canyon Roasting Company',
+      description: 'Washed Ethiopian single origin with citrus, jasmine, and honey notes.',
+      offers: {
+        '@type': 'Offer',
+        price: '22',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://shop.redcanyonroasting.co'
+      }
+    },
+    {
+      '@type': 'Product',
+      name: 'Nyeri AA',
+      brand: 'Red Canyon Roasting Company',
+      description: 'Kenyan AA single origin with blackcurrant, tomato acidity, and brown sugar finish.',
+      offers: {
+        '@type': 'Offer',
+        price: '24',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://shop.redcanyonroasting.co'
+      }
+    },
+    {
+      '@type': 'Product',
+      name: 'Kona Extra Fancy',
+      brand: 'Red Canyon Roasting Company',
+      description: 'Hawaiian single origin with caramel, macadamia, and cocoa notes.',
+      offers: {
+        '@type': 'Offer',
+        price: '38',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://shop.redcanyonroasting.co'
+      }
+    }
+  ];
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': products
+  });
+  document.head.appendChild(script);
+}
+
+addOriginProductSchema();
+
+// ==========================================
+// Newsletter form submit (real endpoint)
+// ==========================================
+async function submitNewsletter(form, email) {
+  const endpoint =
+    form.dataset.newsletterEndpoint ||
+    document.body.dataset.newsletterEndpoint ||
+    NEWSLETTER_ENDPOINT_DEFAULT;
+
+  const payload = new URLSearchParams();
+  payload.set('email', email);
+  payload.set('tag', PAGE.replace('.html', ''));
+
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: payload.toString()
+  });
+
+  if (!res.ok) {
+    throw new Error(`Newsletter request failed: ${res.status}`);
+  }
+}
+
 document.querySelectorAll('.newsletter-form').forEach(form => {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = form.querySelector('.newsletter-btn');
     const input = form.querySelector('.newsletter-input');
-    if (btn) {
-      btn.textContent = 'Subscribed!';
-      btn.classList.add('success');
+    const message = form.querySelector('.newsletter-status');
+    const email = input?.value?.trim() || '';
+
+    if (!email || !input?.checkValidity()) {
+      if (message) {
+        message.textContent = 'Enter a valid email address.';
+        message.classList.add('error');
+      }
+      return;
     }
-    if (input) {
-      input.disabled = true;
-      input.value = '';
-      input.placeholder = "Thanks! We'll be in touch.";
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+    }
+
+    if (message) {
+      message.textContent = '';
+      message.classList.remove('error');
+    }
+
+    try {
+      await submitNewsletter(form, email);
+      trackEvent('newsletter_submit', { page: PAGE, email_domain: email.split('@')[1] || 'unknown' });
+
+      if (btn) {
+        btn.textContent = 'Subscribed!';
+        btn.classList.add('success');
+      }
+      if (input) {
+        input.disabled = true;
+        input.value = '';
+        input.placeholder = "Thanks! We'll be in touch.";
+      }
+      if (message) {
+        message.textContent = 'You are on the list.';
+      }
+    } catch (err) {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Try Again';
+      }
+      if (message) {
+        message.textContent = 'Subscription failed. Email hello@redcanyonroasting.co.';
+        message.classList.add('error');
+      }
+    }
+  });
+});
+
+// ==========================================
+// CTA and outbound click analytics
+// ==========================================
+function isExternalLink(link) {
+  try {
+    const url = new URL(link.href, location.href);
+    return url.origin !== location.origin;
+  } catch {
+    return false;
+  }
+}
+
+document.querySelectorAll('a[href]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const explicitEvent = link.dataset.track;
+    if (explicitEvent) {
+      trackEvent(explicitEvent, { page: PAGE, href: link.href });
+      return;
+    }
+
+    if (isExternalLink(link)) {
+      trackEvent('outbound_link_click', { page: PAGE, href: link.href });
     }
   });
 });
