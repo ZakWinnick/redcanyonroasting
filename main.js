@@ -8,6 +8,11 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// Dynamic footer year
+document.querySelectorAll('.footer-year').forEach(el => {
+  el.textContent = new Date().getFullYear();
+});
+
 // Mobile menu toggle
 const toggle = document.getElementById('mobileToggle');
 const mobileMenu = document.getElementById('mobileMenu');
