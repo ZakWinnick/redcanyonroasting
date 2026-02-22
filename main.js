@@ -297,21 +297,6 @@ function buildFooterMarkup() {
   copy.textContent = `\u00A9 ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.`;
   bottom.appendChild(copy);
 
-  const social = document.createElement('div');
-  social.className = 'footer-social';
-  [
-    { text: 'Instagram', href: 'https://instagram.com/redcanyonroasts' },
-    { text: 'X', href: 'https://x.com/redcanyonroasts' }
-  ].forEach(({ text, href }) => {
-    const a = document.createElement('a');
-    a.href = href;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.textContent = text;
-    social.appendChild(a);
-  });
-  bottom.appendChild(social);
-
   footer.appendChild(bottom);
   return footer;
 }
