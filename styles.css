@@ -213,6 +213,10 @@ nav.scrolled .nav-logo {
   text-transform: uppercase;
 }
 
+.nav-logo-red {
+  color: var(--red);
+}
+
 .nav-links {
   display: flex;
   align-items: center;

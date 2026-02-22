@@ -58,7 +58,11 @@ function buildNavMarkup() {
   logoLink.appendChild(logoSvgContainer.firstChild);
   const logoText = document.createElement('span');
   logoText.className = 'nav-logo-text';
-  logoText.textContent = 'Red Canyon';
+  const logoRed = document.createElement('span');
+  logoRed.className = 'nav-logo-red';
+  logoRed.textContent = 'Red Canyon';
+  logoText.appendChild(logoRed);
+  logoText.appendChild(document.createTextNode(' Roasting Co.'));
   logoLink.appendChild(logoText);
   navbar.appendChild(logoLink);
 
@@ -223,7 +227,11 @@ function buildFooterMarkup() {
   const brandText = document.createElement('span');
   brandText.className = 'nav-logo-text';
   brandText.style.fontSize = '12px';
-  brandText.textContent = 'Red Canyon';
+  const brandRed = document.createElement('span');
+  brandRed.className = 'nav-logo-red';
+  brandRed.textContent = 'Red Canyon';
+  brandText.appendChild(brandRed);
+  brandText.appendChild(document.createTextNode(' Roasting Co.'));
   brandLink.appendChild(brandText);
   brand.appendChild(brandLink);
 
