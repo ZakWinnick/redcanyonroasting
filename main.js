@@ -70,9 +70,10 @@ function buildNavMarkup() {
 
   const links = [
     { href: 'origins.html', text: 'Origins' },
-    { href: 'story.html', text: 'Our Story' },
+    { href: 'story.html', text: 'The Story' },
     { href: 'rangeway.html', text: 'Rangeway' },
-    { href: 'community.html', text: 'Community' }
+    { href: 'community.html', text: 'Community' },
+    { href: 'pledge.html', text: 'Pledge' }
   ];
 
   links.forEach(({ href, text }) => {
@@ -247,9 +248,10 @@ function buildFooterMarkup() {
     {
       title: 'Company',
       links: [
-        { text: 'Our Story', href: 'story.html' },
+        { text: 'The Story', href: 'story.html' },
         { text: 'Rangeway Partnership', href: 'rangeway.html' },
         { text: 'Events', href: 'community.html' },
+        { text: 'Our Pledge', href: 'pledge.html' },
         { text: 'Contact', href: 'mailto:hello@redcanyonroasting.co' }
       ]
     },
