@@ -15,12 +15,10 @@ function activeClass(href) {
   return PAGE === href ? ' class="active"' : '';
 }
 
-const LOGO_SVG = `<svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
-  <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
-  <path d="M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z" fill="#B4232A"/>
-  <path d="M65,140 L75,95 L85,95 L95,140 Z" fill="#2C2C2C"/>
-  <circle cx="105" cy="28" r="6" fill="#D4A574"/>
+const LOGO_SVG = `<svg viewBox="0 0 112 112" xmlns="http://www.w3.org/2000/svg">
+  <path d="M32 104 C16 68 50 46 34 4" stroke="#B4232A" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M56 104 C40 68 74 46 58 4" stroke="#D4A574" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M80 104 C64 68 98 46 82 4" stroke="#B4232A" stroke-width="9" fill="none" stroke-linecap="round"/>
 </svg>`;
 
 function trackEvent(name, props = {}) {
@@ -202,26 +200,21 @@ function buildFooterMarkup() {
   const brandSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   brandSvg.setAttribute('width', '32');
   brandSvg.setAttribute('height', '32');
-  brandSvg.setAttribute('viewBox', '0 0 170 160');
+  brandSvg.setAttribute('viewBox', '0 0 112 112');
   const paths = [
-    { d: 'M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z', fill: '#D4A574', opacity: '0.5' },
-    { d: 'M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z', fill: '#B4232A', opacity: '0.7' },
-    { d: 'M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z', fill: '#B4232A' },
-    { d: 'M65,140 L75,95 L85,95 L95,140 Z', fill: '#2C2C2C' }
+    { d: 'M32 104 C16 68 50 46 34 4', stroke: '#B4232A', strokeWidth: '9' },
+    { d: 'M56 104 C40 68 74 46 58 4', stroke: '#D4A574', strokeWidth: '4' },
+    { d: 'M80 104 C64 68 98 46 82 4', stroke: '#B4232A', strokeWidth: '9' }
   ];
-  paths.forEach(({ d, fill, opacity }) => {
+  paths.forEach(({ d, stroke, strokeWidth }) => {
     const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     p.setAttribute('d', d);
-    p.setAttribute('fill', fill);
-    if (opacity) p.setAttribute('opacity', opacity);
+    p.setAttribute('stroke', stroke);
+    p.setAttribute('stroke-width', strokeWidth);
+    p.setAttribute('fill', 'none');
+    p.setAttribute('stroke-linecap', 'round');
     brandSvg.appendChild(p);
   });
-  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  circle.setAttribute('cx', '105');
-  circle.setAttribute('cy', '28');
-  circle.setAttribute('r', '6');
-  circle.setAttribute('fill', '#D4A574');
-  brandSvg.appendChild(circle);
   brandLink.appendChild(brandSvg);
 
   const brandText = document.createElement('span');

@@ -1,7 +1,6 @@
-<svg viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
-  <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
-  <path d="M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z" fill="#B4232A"/>
-  <path d="M65,140 L75,95 L85,95 L95,140 Z" fill="#2C2C2C"/>
-  <circle cx="105" cy="28" r="6" fill="#D4A574"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18 58 C10 40 30 28 20 6" stroke="#B4232A" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M32 58 C24 40 44 28 34 6" stroke="#D4A574" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M46 58 C38 40 58 28 48 6" stroke="#B4232A" stroke-width="7" fill="none" stroke-linecap="round"/>
 </svg>
