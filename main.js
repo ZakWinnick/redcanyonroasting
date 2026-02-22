@@ -471,6 +471,25 @@ function createEventRow(event) {
     row.rel = 'noopener noreferrer';
   }
 
+  // Org logo
+  if (event.org) {
+    const logoEl = document.createElement('img');
+    logoEl.className = 'upcoming-event-logo';
+    logoEl.width = 28;
+    logoEl.height = 28;
+    if (event.org === 'barc') {
+      logoEl.src = 'images/barc-logo.png';
+      logoEl.alt = 'BARC';
+    } else if (event.org === 'norcal') {
+      logoEl.src = 'images/norcal-evs-logo.png';
+      logoEl.alt = 'NorCal EVs';
+    } else if (event.org === 'rcrc') {
+      logoEl.src = 'images/rcrc-logo.png';
+      logoEl.alt = 'RCRC';
+    }
+    row.appendChild(logoEl);
+  }
+
   const dateEl = document.createElement('div');
   dateEl.className = 'upcoming-event-date';
   dateEl.textContent = formatted;

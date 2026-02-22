@@ -542,7 +542,7 @@ nav.scrolled .nav-social a:hover {
    PAGE HERO (Inner pages)
    ------------------------------------------ */
 .page-hero {
-  padding: 180px 80px 100px;
+  padding: 180px 80px 160px;
   background:
     radial-gradient(circle at 75% 20%, rgba(212, 165, 116, 0.2), transparent 40%),
     radial-gradient(circle at 15% 80%, rgba(180, 35, 42, 0.08), transparent 50%),
@@ -1597,10 +1597,16 @@ nav.scrolled .nav-social a:hover {
 
 .events-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-md);
   max-width: 900px;
   margin: 0 auto;
+}
+
+.events-grid .event-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - var(--space-md) / 2);
+  justify-self: center;
 }
 
 .event-card {
@@ -1609,6 +1615,9 @@ nav.scrolled .nav-social a:hover {
   padding: 40px;
   border: 1px solid rgba(0,0,0,0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .event-card:hover {
@@ -1617,17 +1626,26 @@ nav.scrolled .nav-social a:hover {
 }
 
 .event-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.event-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .event-icon-rivian { background: rgba(180,35,42,0.08); }
 .event-icon-norcal { background: rgba(45,90,61,0.08); }
+.event-icon-rcrc { background: rgba(60,60,60,0.08); }
 
 .event-name {
   font-size: 18px;
@@ -1663,6 +1681,14 @@ nav.scrolled .nav-social a:hover {
   justify-content: space-between;
   padding: 24px 0;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.upcoming-event-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .upcoming-event-date {
@@ -2347,7 +2373,7 @@ footer {
   .partnership-lockup { gap: 24px; }
   .community { padding: 80px 48px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .page-hero { padding: 140px 48px 80px; }
+  .page-hero { padding: 140px 48px 120px; }
   .story-body { padding: 60px 48px; }
   .origin-detail { grid-template-columns: 1fr; }
   .origin-detail:nth-child(even) .origin-detail-visual { order: 1; }
@@ -2427,6 +2453,7 @@ footer {
   }
 
   .events-grid { grid-template-columns: 1fr; }
+  .events-grid .event-card:last-child:nth-child(odd) { max-width: 100%; }
 
   .newsletter { padding: 60px 32px; }
   .newsletter-form {
@@ -2442,7 +2469,7 @@ footer {
   footer { padding: 48px 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
 
-  .page-hero { padding: 120px 32px 60px; }
+  .page-hero { padding: 120px 32px 100px; }
   .story-body { padding: 48px 32px; }
   .story-pullquote-block { font-size: 22px; padding-left: 24px; margin-left: 0; }
   .origin-detail-content { padding: 32px; }
