@@ -1689,6 +1689,7 @@ nav.scrolled .nav-social a:hover {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  margin-right: 12px;
 }
 
 .upcoming-event-date {

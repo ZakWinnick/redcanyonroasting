@@ -547,41 +547,51 @@ function addEventSchema(events) {
 async function renderEvents() {
   const container = document.getElementById('events-container');
 
+  let events;
   try {
     const res = await fetch('data/events.json', { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const events = await res.json();
-
-    const now = new Date();
-    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    const upcoming = events
-      .filter(e => e.date >= today)
-      .sort((a, b) => a.date.localeCompare(b.date));
-
-    addEventSchema(upcoming);
-
-    if (!container) return;
-    container.replaceChildren();
-
-    if (upcoming.length === 0) {
-      const msg = document.createElement('p');
-      msg.className = 'no-events';
-      msg.textContent = 'No upcoming events \u2014 check back soon!';
-      container.appendChild(msg);
-      return;
+    events = await res.json();
+  } catch {
+    // Fallback to inline data (works on file:// protocol)
+    const inlineData = document.getElementById('events-data');
+    if (inlineData) {
+      try { events = JSON.parse(inlineData.textContent); } catch { /* ignore */ }
     }
+  }
 
-    upcoming.forEach(event => {
-      container.appendChild(createEventRow(event));
-    });
-  } catch (e) {
+  if (!events) {
     if (!container) return;
     container.replaceChildren();
     const msg = document.createElement('p');
     msg.className = 'no-events';
     msg.textContent = 'Unable to load events \u2014 check back soon!';
     container.appendChild(msg);
+    return;
   }
+
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const upcoming = events
+    .filter(e => e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  addEventSchema(upcoming);
+
+  if (!container) return;
+  container.replaceChildren();
+
+  if (upcoming.length === 0) {
+    const msg = document.createElement('p');
+    msg.className = 'no-events';
+    msg.textContent = 'No upcoming events \u2014 check back soon!';
+    container.appendChild(msg);
+    return;
+  }
+
+  upcoming.forEach(event => {
+    container.appendChild(createEventRow(event));
+  });
 }
 
 renderEvents();
