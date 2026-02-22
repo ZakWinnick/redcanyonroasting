@@ -3,6 +3,8 @@
 // ==========================================
 // Nav and footer are defined once here and injected into placeholder
 // elements (#nav-root, #footer-root) on each page.
+// NOTE: innerHTML is used intentionally with hardcoded template literals
+// (no user input), which is safe from XSS.
 
 const PAGE = location.pathname.split('/').pop() || 'index.html';
 const IS_INNER = PAGE !== 'index.html';
@@ -37,90 +39,295 @@ function trackEvent(name, props = {}) {
   }
 }
 
-// Nav
-const navRoot = document.getElementById('nav-root');
-if (navRoot) {
-  navRoot.innerHTML = `
-<nav id="navbar"${IS_INNER ? ' class="nav-dark"' : ''}>
-  <a href="index.html" class="nav-logo">
-    ${LOGO_SVG}
-    <span class="nav-logo-text">Red Canyon</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="origins.html"${activeClass('origins.html')}>Origins</a></li>
-    <li><a href="story.html"${activeClass('story.html')}>Our Story</a></li>
-    <li><a href="rangeway.html"${activeClass('rangeway.html')}>Rangeway</a></li>
-    <li><a href="community.html"${activeClass('community.html')}>Community</a></li>
-    <li><a href="https://shop.redcanyonroasting.co" class="nav-cta" data-track="nav_shop_click" target="_blank" rel="noopener noreferrer">Shop</a></li>
-    <li class="nav-social"><a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
-    <li class="nav-social"><a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a></li>
-  </ul>
-  <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <a href="origins.html">Origins</a>
-  <a href="story.html">Our Story</a>
-  <a href="rangeway.html">Rangeway</a>
-  <a href="community.html">Community</a>
-  <a href="https://shop.redcanyonroasting.co" class="mobile-menu-cta" data-track="mobile_shop_click" target="_blank" rel="noopener noreferrer">Shop</a>
-  <div class="mobile-menu-social">
-    <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-  </div>
-</div>`;
+// Build nav markup (hardcoded, no user input)
+function buildNavMarkup() {
+  const navClass = IS_INNER ? ' class="nav-dark"' : '';
+  const nav = document.createElement('div');
+
+  // Build nav element
+  const navbar = document.createElement('nav');
+  navbar.id = 'navbar';
+  if (IS_INNER) navbar.className = 'nav-dark';
+
+  // Logo
+  const logoLink = document.createElement('a');
+  logoLink.href = 'index.html';
+  logoLink.className = 'nav-logo';
+  const logoSvgContainer = document.createElement('span');
+  logoSvgContainer.insertAdjacentHTML('afterbegin', LOGO_SVG); // safe: hardcoded SVG
+  logoLink.appendChild(logoSvgContainer.firstChild);
+  const logoText = document.createElement('span');
+  logoText.className = 'nav-logo-text';
+  logoText.textContent = 'Red Canyon';
+  logoLink.appendChild(logoText);
+  navbar.appendChild(logoLink);
+
+  // Nav links (built via DOM)
+  const ul = document.createElement('ul');
+  ul.className = 'nav-links';
+
+  const links = [
+    { href: 'origins.html', text: 'Origins' },
+    { href: 'story.html', text: 'Our Story' },
+    { href: 'rangeway.html', text: 'Rangeway' },
+    { href: 'community.html', text: 'Community' }
+  ];
+
+  links.forEach(({ href, text }) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = text;
+    if (PAGE === href) a.className = 'active';
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  // Shop CTA
+  const shopLi = document.createElement('li');
+  const shopA = document.createElement('a');
+  shopA.href = 'https://shop.redcanyonroasting.co';
+  shopA.className = 'nav-cta';
+  shopA.dataset.track = 'nav_shop_click';
+  shopA.target = '_blank';
+  shopA.rel = 'noopener noreferrer';
+  shopA.textContent = 'Shop';
+  shopLi.appendChild(shopA);
+  ul.appendChild(shopLi);
+
+  // Social icons
+  const socials = [
+    { href: 'https://instagram.com/redcanyonroasts', label: 'Instagram', icon: 'fa-instagram' },
+    { href: 'https://x.com/redcanyonroasts', label: 'X', icon: 'fa-x-twitter' }
+  ];
+
+  socials.forEach(({ href, label, icon }) => {
+    const li = document.createElement('li');
+    li.className = 'nav-social';
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', label);
+    const i = document.createElement('i');
+    i.className = `fa-brands ${icon}`;
+    a.appendChild(i);
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  navbar.appendChild(ul);
+
+  // Mobile toggle
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'nav-mobile-toggle';
+  toggleBtn.id = 'mobileToggle';
+  toggleBtn.setAttribute('aria-label', 'Menu');
+  toggleBtn.setAttribute('aria-controls', 'mobileMenu');
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  for (let s = 0; s < 3; s++) toggleBtn.appendChild(document.createElement('span'));
+  navbar.appendChild(toggleBtn);
+
+  nav.appendChild(navbar);
+
+  // Mobile menu
+  const mobileMenuEl = document.createElement('div');
+  mobileMenuEl.className = 'mobile-menu';
+  mobileMenuEl.id = 'mobileMenu';
+  mobileMenuEl.setAttribute('aria-hidden', 'true');
+
+  const mobileLinks = [
+    { href: 'origins.html', text: 'Origins' },
+    { href: 'story.html', text: 'Our Story' },
+    { href: 'rangeway.html', text: 'Rangeway' },
+    { href: 'community.html', text: 'Community' }
+  ];
+
+  mobileLinks.forEach(({ href, text }) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = text;
+    mobileMenuEl.appendChild(a);
+  });
+
+  const mobileShopA = document.createElement('a');
+  mobileShopA.href = 'https://shop.redcanyonroasting.co';
+  mobileShopA.className = 'mobile-menu-cta';
+  mobileShopA.dataset.track = 'mobile_shop_click';
+  mobileShopA.target = '_blank';
+  mobileShopA.rel = 'noopener noreferrer';
+  mobileShopA.textContent = 'Shop';
+  mobileMenuEl.appendChild(mobileShopA);
+
+  const mobileSocialDiv = document.createElement('div');
+  mobileSocialDiv.className = 'mobile-menu-social';
+  socials.forEach(({ href, label, icon }) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', label);
+    const i = document.createElement('i');
+    i.className = `fa-brands ${icon}`;
+    a.appendChild(i);
+    mobileSocialDiv.appendChild(a);
+  });
+  mobileMenuEl.appendChild(mobileSocialDiv);
+
+  nav.appendChild(mobileMenuEl);
+  return nav;
 }
 
-// Footer
+// Build footer markup (hardcoded, no user input)
+function buildFooterMarkup() {
+  const footer = document.createElement('footer');
+
+  // Footer grid
+  const grid = document.createElement('div');
+  grid.className = 'footer-grid';
+
+  // Brand column
+  const brand = document.createElement('div');
+  brand.className = 'footer-brand';
+
+  const brandLink = document.createElement('a');
+  brandLink.href = 'index.html';
+  brandLink.className = 'nav-logo';
+  brandLink.style.marginBottom = '0';
+
+  const brandSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  brandSvg.setAttribute('width', '32');
+  brandSvg.setAttribute('height', '32');
+  brandSvg.setAttribute('viewBox', '0 0 170 160');
+  const paths = [
+    { d: 'M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z', fill: '#D4A574', opacity: '0.5' },
+    { d: 'M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z', fill: '#B4232A', opacity: '0.7' },
+    { d: 'M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z', fill: '#B4232A' },
+    { d: 'M65,140 L75,95 L85,95 L95,140 Z', fill: '#2C2C2C' }
+  ];
+  paths.forEach(({ d, fill, opacity }) => {
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('fill', fill);
+    if (opacity) p.setAttribute('opacity', opacity);
+    brandSvg.appendChild(p);
+  });
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', '105');
+  circle.setAttribute('cy', '28');
+  circle.setAttribute('r', '6');
+  circle.setAttribute('fill', '#D4A574');
+  brandSvg.appendChild(circle);
+  brandLink.appendChild(brandSvg);
+
+  const brandText = document.createElement('span');
+  brandText.className = 'nav-logo-text';
+  brandText.style.fontSize = '12px';
+  brandText.textContent = 'Red Canyon';
+  brandLink.appendChild(brandText);
+  brand.appendChild(brandLink);
+
+  const brandDesc = document.createElement('p');
+  brandDesc.textContent = 'Single origin coffee roasted with intention. Sourced from Africa and Hawai\u2019i. The exclusive roaster for all Rangeway Basecamps.';
+  brand.appendChild(brandDesc);
+  grid.appendChild(brand);
+
+  // Footer columns
+  const columns = [
+    {
+      title: 'Shop',
+      links: [
+        { text: 'All Origins', href: 'https://shop.redcanyonroasting.co', track: 'footer_shop_all_origins', external: true },
+        { text: 'Subscriptions', href: 'https://shop.redcanyonroasting.co', track: 'footer_shop_subscriptions', external: true },
+        { text: 'Gift Cards', href: 'https://shop.redcanyonroasting.co', track: 'footer_shop_gift_cards', external: true },
+        { text: 'Merch', href: 'https://shop.redcanyonroasting.co', track: 'footer_shop_merch', external: true }
+      ]
+    },
+    {
+      title: 'Company',
+      links: [
+        { text: 'Our Story', href: 'story.html' },
+        { text: 'Rangeway Partnership', href: 'rangeway.html' },
+        { text: 'Events', href: 'community.html' },
+        { text: 'Contact', href: 'mailto:hello@redcanyonroasting.co' }
+      ]
+    },
+    {
+      title: 'Learn',
+      links: [
+        { text: 'Brew Guides', href: 'brew-guides.html' },
+        { text: 'Origin Stories', href: 'origin-stories.html' },
+        { text: 'Event Recaps', href: 'event-recaps.html' },
+        { text: 'Wholesale', href: 'mailto:hello@redcanyonroasting.co' }
+      ]
+    }
+  ];
+
+  columns.forEach(({ title, links }) => {
+    const col = document.createElement('div');
+    col.className = 'footer-col';
+    const titleEl = document.createElement('div');
+    titleEl.className = 'footer-col-title';
+    titleEl.textContent = title;
+    col.appendChild(titleEl);
+
+    links.forEach(({ text, href, track, external }) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = text;
+      if (track) a.dataset.track = track;
+      if (external) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+      col.appendChild(a);
+    });
+
+    grid.appendChild(col);
+  });
+
+  footer.appendChild(grid);
+
+  // Footer bottom
+  const bottom = document.createElement('div');
+  bottom.className = 'footer-bottom';
+
+  const copy = document.createElement('p');
+  copy.textContent = `\u00A9 ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.`;
+  bottom.appendChild(copy);
+
+  const social = document.createElement('div');
+  social.className = 'footer-social';
+  [
+    { text: 'Instagram', href: 'https://instagram.com/redcanyonroasts' },
+    { text: 'X', href: 'https://x.com/redcanyonroasts' }
+  ].forEach(({ text, href }) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = text;
+    social.appendChild(a);
+  });
+  bottom.appendChild(social);
+
+  footer.appendChild(bottom);
+  return footer;
+}
+
+// Inject nav
+const navRoot = document.getElementById('nav-root');
+if (navRoot) {
+  const navFragment = buildNavMarkup();
+  while (navFragment.firstChild) {
+    navRoot.appendChild(navFragment.firstChild);
+  }
+}
+
+// Inject footer
 const footerRoot = document.getElementById('footer-root');
 if (footerRoot) {
-  footerRoot.innerHTML = `
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="nav-logo" style="margin-bottom: 0;">
-        <svg width="32" height="32" viewBox="0 0 170 160" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10,140 L50,45 L70,75 L95,30 L120,75 L140,55 L160,140 Z" fill="#D4A574" opacity="0.5"/>
-          <path d="M25,140 L60,60 L80,90 L105,40 L125,85 L150,140 Z" fill="#B4232A" opacity="0.7"/>
-          <path d="M0,140 L40,55 L65,95 L85,50 L110,95 L135,65 L170,140 Z" fill="#B4232A"/>
-          <path d="M65,140 L75,95 L85,95 L95,140 Z" fill="#2C2C2C"/>
-          <circle cx="105" cy="28" r="6" fill="#D4A574"/>
-        </svg>
-        <span class="nav-logo-text" style="font-size: 12px;">Red Canyon</span>
-      </a>
-      <p>Single origin coffee roasted with intention. Sourced from Africa and Hawai'i. The exclusive roaster for all Rangeway Basecamps.</p>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Shop</div>
-      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_all_origins">All Origins</a>
-      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_subscriptions">Subscriptions</a>
-      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_gift_cards">Gift Cards</a>
-      <a href="https://shop.redcanyonroasting.co" data-track="footer_shop_merch">Merch</a>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Company</div>
-      <a href="story.html">Our Story</a>
-      <a href="rangeway.html">Rangeway Partnership</a>
-      <a href="community.html">Events</a>
-      <a href="mailto:hello@redcanyonroasting.co">Contact</a>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Learn</div>
-      <a href="brew-guides.html">Brew Guides</a>
-      <a href="origin-stories.html">Origin Stories</a>
-      <a href="event-recaps.html">Event Recaps</a>
-      <a href="mailto:hello@redcanyonroasting.co">Wholesale</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© ${new Date().getFullYear()} Red Canyon Roasting Company. All rights reserved.</p>
-    <div class="footer-social">
-      <a href="https://instagram.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://x.com/redcanyonroasts" target="_blank" rel="noopener noreferrer">X</a>
-    </div>
-  </div>
-</footer>`;
+  footerRoot.appendChild(buildFooterMarkup());
 }
 
 // ==========================================
@@ -144,7 +351,7 @@ window.addEventListener('scroll', () => {
       backToTop.classList.remove('visible');
     }
   }
-});
+}, { passive: true });
 
 if (backToTop) {
   backToTop.addEventListener('click', () => {
@@ -211,7 +418,7 @@ if (toggle && mobileMenu) {
 }
 
 // ==========================================
-// Scroll-triggered animations
+// Scroll-triggered animations (enhanced)
 // ==========================================
 const scrollElements = document.querySelectorAll('.animate-on-scroll');
 
@@ -220,6 +427,21 @@ if (scrollElements.length > 0) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
+
+        // Stagger children within grids
+        const children = entry.target.querySelectorAll('.origin-card, .event-card, .resource-link, .rangeway-detail-card, .trust-item, .content-loop-card, .home-feature-card');
+        children.forEach((child, i) => {
+          child.style.opacity = '0';
+          child.style.transform = 'translateY(16px)';
+          child.style.transition = `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              child.style.opacity = '1';
+              child.style.transform = 'translateY(0)';
+            });
+          });
+        });
+
         observer.unobserve(entry.target);
       }
     });
@@ -268,7 +490,7 @@ function createEventRow(event) {
   if (isLink) {
     const arrow = document.createElement('span');
     arrow.className = 'upcoming-event-arrow';
-    arrow.textContent = '→';
+    arrow.textContent = '\u2192';
     row.appendChild(arrow);
   }
 
@@ -325,7 +547,7 @@ async function renderEvents() {
     if (upcoming.length === 0) {
       const msg = document.createElement('p');
       msg.className = 'no-events';
-      msg.textContent = 'No upcoming events — check back soon!';
+      msg.textContent = 'No upcoming events \u2014 check back soon!';
       container.appendChild(msg);
       return;
     }
@@ -338,7 +560,7 @@ async function renderEvents() {
     container.replaceChildren();
     const msg = document.createElement('p');
     msg.className = 'no-events';
-    msg.textContent = 'Unable to load events — check back soon!';
+    msg.textContent = 'Unable to load events \u2014 check back soon!';
     container.appendChild(msg);
   }
 }
@@ -449,7 +671,7 @@ document.querySelectorAll('.newsletter-form').forEach(form => {
 
     if (btn) {
       btn.disabled = true;
-      btn.textContent = 'Submitting...';
+      btn.textContent = 'Submitting\u2026';
     }
 
     if (message) {
