@@ -429,7 +429,7 @@ if (scrollElements.length > 0) {
         entry.target.classList.add('is-visible');
 
         // Stagger children within grids
-        const children = entry.target.querySelectorAll('.origin-card, .event-card, .resource-link, .rangeway-detail-card, .trust-item, .content-loop-card, .home-feature-card');
+        const children = entry.target.querySelectorAll('.origin-card, .origin-featured, .event-card, .resource-link, .numbered-card, .rangeway-detail-card, .trust-item, .content-loop-card, .home-feature-card');
         children.forEach((child, i) => {
           child.style.opacity = '0';
           child.style.transform = 'translateY(16px)';
