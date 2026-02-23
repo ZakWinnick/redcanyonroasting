@@ -69,10 +69,9 @@ function buildNavMarkup() {
   ul.className = 'nav-links';
 
   const links = [
-    { href: 'origins.html', text: 'Origins' },
     { href: 'story.html', text: 'The Story' },
-    { href: 'rangeway.html', text: 'Rangeway' },
     { href: 'community.html', text: 'Community' },
+    { href: 'rangeway.html', text: 'Rangeway' },
     { href: 'pledge.html', text: 'Pledge' }
   ];
 
@@ -140,10 +139,10 @@ function buildNavMarkup() {
   mobileMenuEl.setAttribute('aria-hidden', 'true');
 
   const mobileLinks = [
-    { href: 'origins.html', text: 'Origins' },
-    { href: 'story.html', text: 'Our Story' },
+    { href: 'story.html', text: 'The Story' },
+    { href: 'community.html', text: 'Community' },
     { href: 'rangeway.html', text: 'Rangeway' },
-    { href: 'community.html', text: 'Community' }
+    { href: 'pledge.html', text: 'Pledge' }
   ];
 
   mobileLinks.forEach(({ href, text }) => {
@@ -258,9 +257,6 @@ function buildFooterMarkup() {
     {
       title: 'Learn',
       links: [
-        { text: 'Brew Guides', href: 'brew-guides.html' },
-        { text: 'Origin Stories', href: 'origin-stories.html' },
-        { text: 'Event Recaps', href: 'event-recaps.html' },
         { text: 'Wholesale', href: 'mailto:hello@redcanyonroasting.co' }
       ]
     }
