@@ -52,14 +52,13 @@
    RESET & BASE
    ------------------------------------------ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; background: #1e1d1b; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: var(--body-font);
   background: var(--cream);
   color: var(--charcoal);
   line-height: 1.7;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
