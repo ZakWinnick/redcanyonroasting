@@ -304,13 +304,13 @@ nav.scrolled .nav-logo {
 }
 
 nav.nav-dark .nav-social a {
-  color: var(--charcoal);
+  color: var(--cream);
   opacity: 0.5;
 }
 
 nav.nav-dark .nav-social a:hover {
   opacity: 1;
-  color: var(--red);
+  color: var(--sand);
 }
 
 nav.scrolled .nav-social a {
