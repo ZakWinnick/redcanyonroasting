@@ -52,7 +52,7 @@
    RESET & BASE
    ------------------------------------------ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: #1e1d1b; }
 
 body {
   font-family: var(--body-font);
